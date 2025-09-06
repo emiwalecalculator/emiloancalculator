@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EMI Calculator - Demo by EmiWale.in</title>
+  <style>
+    body { 
+      font-family: Arial, sans-serif; 
+      max-width: 500px; 
+      margin: 40px auto; 
+      padding: 20px; 
+      border: 1px solid #ddd; 
+      border-radius: 10px; 
+      background: #f9f9f9; 
+    }
+    h2 { text-align: center; color: #333; }
+    label { display: block; margin-top: 12px; }
+    input { width: 100%; padding: 8px; margin-top: 4px; }
+    button { margin-top: 15px; padding: 10px; width: 100%; background: #0073e6; color: #fff; border: none; border-radius: 5px; cursor: pointer; }
+    button:hover { background: #005bb5; }
+    .result { margin-top: 20px; font-weight: bold; font-size: 18px; }
+    .credit { margin-top: 30px; font-size: 13px; text-align: center; color: #555; }
+    .credit a { color: #0073e6; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <h2>EMI Calculator Demo</h2>
+
+  <label for="principal">Loan Amount (₹)</label>
+  <input type="number" id="principal" placeholder="e.g. 1000000">
+
+  <label for="rate">Annual Interest Rate (%)</label>
+  <input type="number" id="rate" step="0.01" placeholder="e.g. 8">
+
+  <label for="tenure">Tenure (Years)</label>
+  <input type="number" id="tenure" placeholder="e.g. 20">
+
+  <button onclick="calculateEMI()">Calculate EMI</button>
+
+  <div class="result" id="result"></div>
+
+  <div class="credit">
+    Full-featured calculators for Home, Car & Personal Loans → 
+    <a href="https://emiwale.in" target="_blank">EmiWale.in</a>
+  </div>
+
+  <script>
+    function calculateEMI() {
+      const principal = parseFloat(document.getElementById("principal").value);
+      const annualRate = parseFloat(document.getElementById("rate").value);
+      const years = parseInt(document.getElementById("tenure").value);
+
+      if (isNaN(principal) || isNaN(annualRate) || isNaN(years)) {
+        document.getElementById("result").innerText = "⚠️ Please enter all fields correctly.";
+        return;
+      }
+
+      const monthlyRate = (annualRate / 100) / 12;
+      const totalMonths = years * 12;
+
+      const emi = (principal * monthlyRate * Math.pow(1 + monthlyRate, totalMonths)) /
+                  (Math.pow(1 + monthlyRate, totalMonths) - 1);
+
+      document.getElementById("result").innerText = 
+        "Your Monthly EMI: ₹" + emi.toFixed(2);
+    }
+  </script>
+</body>
+</html>
